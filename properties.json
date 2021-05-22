@@ -1,0 +1,12 @@
+{
+  "kafka":{
+    "name":"kakfa",
+    "ipaddress":"",
+    "port":"",
+    "groupid":""
+  },
+  "sqlite":{
+    "name":"sqlite3",
+    "file":"pythonsqlite.db"
+  }
+}
