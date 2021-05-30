@@ -5,3 +5,4 @@ class DatabaseTypes(Enum):
     FLATFILE = "FLATFILES"
     SQL = "SQL"
     NOSQL = 'NOSQL'
+    SQLite = "SQLite"

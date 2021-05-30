@@ -7,6 +7,6 @@
   },
   "sqlite":{
     "name":"sqlite3",
-    "file":"pythonsqlite.db"
+    "file_name":"pythonsqlite.db"
   }
 }
