@@ -1,19 +1,21 @@
 import json
 
-from db.DBUtils import DBUtils
+from db import DB_Manager
+from helper import convert_message
+from kafka import KafkaConsumer
 
+# Constant to connect to kafka topic
+topic_name = "hsrb_monitoring_rgbd"
 
-def get_input():
-    return 'sqlite'
-
+event_listener = KafkaConsumer(
+    'hsrb_monitoring_rgbd', value_deserializer=lambda m: json.loads(m.decode('utf-8')))
 
 if __name__ == '__main__':
-    input_name = get_input()
+
     with open('properties.json') as json_file:
         config_data = json.load(json_file)
-    # print(config_data)
-    db_utils = DBUtils()
-    db_connection_details = r'pythonsqlite.db'
-    # db_utils.connect_sqlite(r"./pythonsqlite.db")
-    # print(config_data[input_name])
-    db_utils.connect(config_data[input_name])
+
+    if config_data['enable_storage']:
+        for message in event_listener:
+            event_log = convert_message(message)
+            print(event_log)

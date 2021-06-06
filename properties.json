@@ -1,12 +1,19 @@
 {
-  "kafka":{
-    "name":"kakfa",
-    "ipaddress":"",
-    "port":"",
-    "groupid":""
+  "enable_storage": true,
+  "config": {
+    "storage_name": "sqlite"
   },
-  "sqlite":{
-    "name":"sqlite3",
-    "file_name":"pythonsqlite.db"
+  "available_storages": {
+    "kafka": {
+      "name": "kakfa",
+      "ipaddress": "",
+      "port": "",
+      "groupid": ""
+    },
+    "sqlite": {
+      "name": "sqlite3",
+      "file_name": "pythonsqlite.db",
+      "type": "SQL"
+    }
   }
 }
