@@ -13,7 +13,8 @@
     "sqlite": {
       "name": "sqlite3",
       "file_name": "pythonsqlite.db",
-      "type": "SQL"
+      "type": "SQL",
+      "connection_string":"sqlite:///pythonsqlite.db"
     }
   }
 }
