@@ -2,7 +2,7 @@ import json
 from signal import SIGINT, signal
 
 # from db import DB_Manager
-from db.Storage_Manager import SQLManager
+from db.Storage_Manager import SQLManager, create_manager
 from helper import convert_message
 from kafka import KafkaConsumer
 from settings import init
@@ -36,7 +36,7 @@ if __name__ == '__main__':
         db_name = config_data['config']['storage_name']
         db_config = config_data['available_storages'][db_name]
         init(db_config)
-        sql_mgr = SQLManager()
+        storage_manager = create_manager(db_config)
         for message in event_listener:
-            event_log = convert_message(message)
-            sql_mgr.create_query(event_log)
+            event_log = convert_message(message, db_config['type'])
+            storage_manager.create_query(event_log)

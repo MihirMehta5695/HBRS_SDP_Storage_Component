@@ -5,6 +5,8 @@ __pycache__/
 
 # C extensions
 *.so
+demo_mongo.py
+demo_py_mongo.py
 
 # Distribution / packaging
 .Python
