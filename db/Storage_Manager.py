@@ -8,7 +8,6 @@ def create_manager(db_config):
     if db_type == 'SQL':
         return SQLManager()
     if db_type == 'NOSQL' and db_config['name'] == 'mongodb':
-
         return MongoManager()
 
 
