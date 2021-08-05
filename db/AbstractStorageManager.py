@@ -8,25 +8,17 @@ class AbstractStorageManager(ABC):
         pass
 
     @abstractmethod
-    def read_query(self, query):
+    def read_query(self, data):
         pass
 
     @abstractmethod
-    def update_query(self, query):
+    def update_query(self, data):
         pass
 
     @abstractmethod
-    def delete_query(self, query):
+    def delete_query(self, target_obj):
         pass
 
     @abstractmethod
-    def list_query(self, query):
-        pass
-
-    @abstractmethod
-    def create_table(self, query):
-        pass
-
-    @abstractmethod
-    def delete_table(self, query):
+    def list_query(self):
         pass

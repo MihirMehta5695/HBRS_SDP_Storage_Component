@@ -7,6 +7,8 @@ __pycache__/
 *.so
 demo_mongo.py
 demo_py_mongo.py
+demo_yaml.py
+demo_sqlalchemy.py
 
 # Distribution / packaging
 .Python

@@ -10,12 +10,29 @@ from settings import init
 
 # from db import DB_Manager
 
-# Constant to connect to kafka topic
-topic_name = "hsrb_monitoring_rgbd"
 
-# Kakfa topic listener
-event_listener = KafkaConsumer(
-    'hsrb_monitoring_rgbd', value_deserializer=lambda m: json.loads(m.decode('utf-8')))
+class DB_Storage:
+    # def __init__(self, config, topic_name="hsrb_monitoring_rgbd"):
+    def __init__(self, config, topic_name="hsrb_monitoring_feedback_rgbd"):
+
+        # Constant to connect to kafka topic
+        self.topic_name = topic_name
+
+        # Kakfa topic listener
+        self.event_listener = KafkaConsumer(
+            topic_name, value_deserializer=lambda m: json.loads(m.decode('utf-8')))
+
+        self.config = config
+
+    def store_messages(self):
+        if self.config['enable_storage']:
+            db_name = self.config['config']['storage_name']
+            db_config = self.config['available_storages'][db_name]
+            init(db_config)
+            storage_manager = create_manager(db_config)
+            for message in self.event_listener:
+                event_log = convert_message(message, db_config['type'])
+                storage_manager.create_query(event_log)
 
 
 def exit_handler(signal_received, frame):
@@ -33,14 +50,8 @@ if __name__ == '__main__':
 
     # use yaml
     with open('properties.yaml') as json_file:
-        config_data = yaml.load(json_file)
+        config_data = yaml.safe_load(json_file)
 
-    if config_data['enable_storage']:
-
-        db_name = config_data['config']['storage_name']
-        db_config = config_data['available_storages'][db_name]
-        init(db_config)
-        storage_manager = create_manager(db_config)
-        for message in event_listener:
-            event_log = convert_message(message, db_config['type'])
-            storage_manager.create_query(event_log)
+    db_storage = DB_Storage(
+        config_data, topic_name="hsrb_monitoring_feedback_rgbd")
+    db_storage.store_messages()
